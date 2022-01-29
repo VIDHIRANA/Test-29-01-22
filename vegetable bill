@@ -1,0 +1,156 @@
+// Include header file
+#include <iostream>
+#include <string>
+#include <vector>
+#include <bits/stdc++.h>
+using namespace std;
+
+class Employee
+{
+    public:
+    std::string name;
+    bool prefered;
+};
+
+class Item
+{
+    public:
+    std::string itemName;
+    double itemPrice;
+    double discount;
+    Item(std::string itemName, double itemPrice)
+    {
+        this->itemName = itemName;
+        this->itemPrice = itemPrice;
+    }
+    Item(std::string itemName, double itemPrice, double discount)
+    {
+        this->itemName = itemName;
+        this->itemPrice = itemPrice;
+        this->discount = discount;
+    }
+    double getPrice()
+    {
+        return this->itemPrice;
+    }
+    double getDiscount()
+    {
+        return this->discount;
+    }
+};
+
+class Settlement {
+	public:
+	// returns a value of standard input in c++
+	template < typename T > static T input() {
+		T value;
+		std::cin >> value;
+		return value;
+	}
+};
+
+class VegetableBill
+{
+    public:
+    Employee* clerk;
+    Item* item;
+    std::vector <> itemList = std::vector<Item *>();
+    VegetableBill(Employee* clerk)
+    {
+        this->clerk = clerk;
+    }
+    void add(Item* i)
+    {
+        itemList.push_back(new Item(i->itemName, i->itemPrice));
+    }
+    double getTotal()
+    {
+        double totalSum = 0;
+        for (auto item : itemList)
+        {
+            totalSum += item->itemPrice;
+                }
+                return totalSum;
+            }
+            void printReceipt()
+            {
+                std::cout << "Name:\t" + clerk->name << std::endl;
+                std::cout << "Items \tCost\tDiscount\tPrice After Discount" << std::endl;
+                for (auto item : itemList)
+                {
+                    std::cout << item->itemName + "\t" + std::to_string(item->itemPrice) + "\t" + std::to_string(item->discount) << std::endl;
+                        }
+                        std::cout << "\n Total Cost:\t" + std::to_string(getTotal()) << std::endl;
+                    }
+                };
+
+
+class DiscountBill : public VegetableBill
+{
+    public:
+    Item* item;
+    bool prefered;
+    DiscountBill (Employee* clerk, bool prefered)
+    {
+        this->prefered = prefered;
+    }
+    int getDiscountCount()
+    {
+        int count = 0;
+        if (!prefered)
+        {
+            return count;
+        }
+        for (auto item : itemList)
+        {
+            if (item->discount > 0)
+            {
+                count++;
+            }
+                }
+                return count;
+            }
+            double getDiscountAmount()
+            {
+                double priceAfterDiscount = getTotal();
+                double price;
+                for (auto item : itemList)
+                {
+                    if (item->discount > 0)
+                    {
+                        priceAfterDiscount -= item->discount;
+                    }
+                        }
+                        return priceAfterDiscount;
+                    }
+                    double getDiscountPercent()
+                    {
+                        double price = getTotal();
+                        double priceAfterDiscount = getDiscountAmount();
+                        return (priceAfterDiscount / price) * 100;
+                    }
+                };
+
+class Veg
+{
+    public:
+    static void main(std::vector<std::string> &args)
+    {
+        
+        Employee* clerk = new Employee();
+        clerk->name = Settlement::input<std::string>();
+        std::string itemName = Settlement::input<std::string>();
+        double itemPrice = Settlement::input<double>();
+        double discount = Settlement::input<double>();
+        Item* itemOne = new Item(itemName, itemPrice, discount);
+        VegetableBill* vegetableBill = new DiscountBill(clerk, true);
+        vegetableBill->add(itemOne);
+        vegetableBill->printReceipt();
+    }
+};
+
+int main(int argc, char **argv){
+	std::vector<std::string> parameter(argv + 1, argv + argc);
+	Veg::main(parameter); 
+	return 0;
+};
