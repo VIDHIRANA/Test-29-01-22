@@ -1,0 +1,174 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+//class for the flute
+ class Flute{
+
+  int enteredType, totalGSM;
+  // assigning a common gsm value 
+  int gsm = 50, extraGSM;
+
+  public: int fluteType(){
+    cout<< " enter the no of type of flute \n "<<"1 for type A \n 2 for type B \n 3 for type C \n 4 for type E \n 5 for type F \n 6 for type G \n" ;
+    
+    cin >> enteredType;
+
+    return 0;
+    }
+  
+  public: int extraGSMCheck(){
+    switch(enteredType){
+      case 1: 
+        extraGSM = 10;
+      break;
+
+      case 2: 
+        extraGSM = 30;
+      break;
+
+      case 3:
+        extraGSM = 20; 
+      break;
+
+      case 4: 
+        extraGSM = 40;
+      break;
+
+      case 5: 
+      extraGSM = 50;
+      break;
+
+      case 6: 
+        extraGSM = 20;
+      break;
+
+      default:
+
+
+      break;
+    }
+
+    return extraGSM;
+
+  }
+
+  public: int gsmTotal(){
+    
+    totalGSM = (extraGSM + gsm) * 100 ;
+     return totalGSM;
+  }
+ 
+};
+
+// class for the basic detials 
+ class Box{
+
+   int lenght, width, height, area, noOfPin , stitchingType, stitchingCost, costofPasting, totalCost, boxType;
+   Flute selectedFlute ;
+
+  public: int getInfo(){
+
+     cout<< " enter the lenght, width, height respectivly \n ";
+     cin >>lenght;
+     cin >>width;
+     cin >>height;
+
+     
+
+    
+    selectedFlute.fluteType();
+     return 0;
+   }
+    public: int areaOfBox(){
+      
+      area = lenght * width * height;
+
+      return area;
+    }
+
+    
+
+
+   
+  
+
+  // i was trying to make derived classesof the boxes but the ide started throwing error and wasnt reading it so m making it menu driven 
+
+  int checkTypeOfBox (){
+
+    cout<< " enter the Type of box \n 1 for Universal box \n 2 for  AllFlapMeeting \n 3 for HoneyComb \n 4 for HoneyComb \n 5 for TopOpening SnapLock \n ";
+    cin >> boxType;
+
+    switch(boxType){
+      case 1: 
+        noOfPin = 4;
+         costofPasting = 20 ;
+      break;
+
+      case 2: 
+        noOfPin = 4;
+         costofPasting = 20 ;
+      break;
+
+      case 3:
+        noOfPin = 4;
+         costofPasting = 40 ;
+      break;
+
+      case 4: 
+        noOfPin = 4;
+         costofPasting = 40 ;
+      break;
+
+      case 5: 
+      noOfPin = 4;
+         costofPasting = 50 ;
+      break;
+
+      default: 
+      break;
+    }
+
+    return 0;
+  }
+
+   public: int totalCostOfBox(){
+    
+    checkTypeOfBox();
+    cout << "enter stitching type \n 1 for pins \n 2 for pasting \n ";
+    cin >> stitchingType;
+       if (stitchingType == 1){
+        stitchingCost = noOfPin * 10;
+       }
+       else if (stitchingType == 2){
+         stitchingCost = costofPasting;
+       }
+      
+    totalCost= area * selectedFlute.gsmTotal() * selectedFlute.extraGSMCheck() * stitchingCost ;
+
+    return totalCost;
+  }  
+};
+
+
+int main() {
+  int finalCost, part;
+ Box box1;
+ box1.getInfo();
+ box1.areaOfBox();
+ finalCost = box1.totalCostOfBox();
+ cout<< "enter the type of partition\n";
+ cin>> part;
+ if (part == 1){
+   cout<< "total cost of box :\t" << finalCost;
+ }
+ else if (part == 2){
+   finalCost = finalCost * 3;
+   cout<< "total cost of box :\t" << finalCost;
+ }
+ 
+
+return 0;
+
+}
